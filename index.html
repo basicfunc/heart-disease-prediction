@@ -1,14 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>Heart Disease Predictor</title>
 	<script defer src="https://pyscript.net/latest/pyscript.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 	<style src="style.css"></style>
 </head>
+
 <body>
-	
+	<py-config type="toml" src="./config.toml"></py-config>
+
+	<div class="container is-max-desktop">
+	<p class="title is-1 has-text-centered">Heart Disease Prediciton</p>
+
+
+		<div class="field">
+			<label class="label">Name</label>
+			<div class="control">
+				<input id="name" class="input" type="text" placeholder="Your Name">
+			</div>
+		</div>
+
+		<div class="field">
+			<label class="label">Age</label>
+			<div class="control">
+				<input id="age" class="input" type="number" placeholder="Your Age">
+			</div>
+		</div>
+
+		<div class="field">
+			<label class="label">Sex</label>
+			<div class="control">
+				<input id="sex" class="input" type="number" placeholder="e.g. 1 = male; 0 = female">
+			</div>
+		</div>
+
+		<div class="field">
+			<label class="label">Chest Pain Type</label>
+			<div class="control">
+				<input id="cp" class="input" type="number" placeholder="e.g. 0-3">
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">Resting Blood Pressure</label>
+			<div class="control">
+				<input id="trestbps" class="input" type="number" placeholder="e.g 124">
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">Serum Cholestoral (in mg/dl)</label>
+			<div class="control">
+				<input id="chol" class="input" type="number" placeholder="e.g. 175">
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">Fasting Blood Sugar (>120 mg/dl)</label>
+			<div class="control">
+				<input id="fbs" class="input" type="number" placeholder="1 = true; 0 = false">
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">Resting Electrocardiographic</label>
+			<div class="control">
+				<input id="restecg" class="input" type="number" placeholder="e.g. 0-2">
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">Maximum Heart Rate Achieved</label>
+			<div class="control">
+				<input id="thalach" class="input" type="number" placeholder="e.g. 144">
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">Exercise Induced Angina</label>
+			<div class="control">
+				<input id="exang" class="input" type="number" placeholder="1 = yes; 0 = no">
+			</div>
+		</div>
+		<div class="field">
+			<label class="label">ST depression induced by exercise relative to rest</label>
+			<div class="control">
+				<input id="oldpeak" class="input" type="number" placeholder="oldpeak - 3.1">
+			</div>
+		</div>
+
+		<div class="field">
+			<label class="label">Slope of the peak exercise ST segment</label>
+			<div class="control">
+				<input id="slope" class="input" type="number" placeholder="e.g. 1">
+			</div>
+		</div>
+
+
+		<div class="field">
+			<label class="label">No. of major vessels colored by Flourosopy</label>
+			<div class="control">
+				<input id="ca" class="input" type="number" placeholder="e.g. 0-3">
+			</div>
+		</div>
+
+
+		<div class="field">
+			<label class="label">Thal</label>
+			<div class="control">
+				<input id="thal" class="input" type="number"
+					placeholder="e.g. 0 = normal; 1 = fixed defect; 2 = reversable defect">
+			</div>
+		</div>
+
+		<div class="field">
+			<div class="control">
+				<button py-click="answer()" class="button is-link">Submit</button>
+			</div>
+		</div>
+
+		<py-script>
+			from js import document as d
+			from js import alert as a
+			from predictor import predict
+
+			def answer():
+				name = d.getElementById('name').value
+				age = int(d.getElementById('age').value)
+				sex = int(d.getElementById('sex').value)
+				cp = int(d.getElementById('cp').value)
+				trestbps = int(d.getElementById('trestbps').value)
+				chol = int(d.getElementById('chol').value)
+				fbs = int(d.getElementById('fbs').value)
+				restecg = int(d.getElementById('restecg').value)
+				thalach = int(d.getElementById('thalach').value)
+				exang = int(d.getElementById('exang').value)
+				oldpeak = float(d.getElementById('oldpeak').value)
+				slope = int(d.getElementById('slope').value)
+				ca = int(d.getElementById('ca').value)
+				thal = int(d.getElementById('thal').value)
+
+				res = predict(age,sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal)
+
+				if res == True:
+					r = f"Hey {name}! You're unlikely to get any Heart Disease"
+					a(r)
+				else:
+					r = f"Hey {name}! You're likely to get any Heart Disease"
+					a(r)
+		</py-script>
+	</div>
 </body>
+
 </html>

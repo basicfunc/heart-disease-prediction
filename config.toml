@@ -1,0 +1,9 @@
+terminal = false
+packages = [ "numpy", "scikit-learn", "pandas"]
+    
+[splashscreen]
+enabled = false
+autoclose = true
+
+[[fetch]]
+files = ["predictor.py"]
